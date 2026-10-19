@@ -8,7 +8,9 @@
 - Xcode successfully built the native iOS Simulator target without signing.
 - Public GitHub Pages deployment returned HTTP200 with the expected Sideband page.
 
-[Initial build evidence](https://github.com/rishvaiyer/sideband-glasses/actions/runs/39262969097). The latest core and browser checks total 25 passing tests. Native launch-and-listen UI automation is a separate check; its result is tracked in the [Intel simulator run](https://github.com/rishvaiyer/sideband-glasses/actions/runs/39265472511). Earlier simulator runs failed in runner startup or installation, after the app build passed. Simulator interaction is not yet verified. Browser checks are Chromium, not a claim of physical Mobile Safari testing.
+[Passing verification run](https://github.com/rishvaiyer/sideband-glasses/actions/runs/39265472511), tested code commit `9971c9e`: **26 automated tests passed** (11 JavaScript core, 3 browser, 11 Swift core, 1 native UI). The native app installed and launched on the GitHub-hosted Intel iPhone simulator. The UI test exercised Start/Stop, and the captured launch screen was visually inspected. Earlier ARM simulator runs failed in runner startup or installation; the Intel run passed without weakening OS protections.
+
+[Native simulator screenshot](iphone-simulator.png). This is simulator evidence, not a photograph or physical iPhone check. Browser checks use Chromium, not physical Mobile Safari.
 
 ## Physical acceptance still required
 
