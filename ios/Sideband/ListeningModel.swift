@@ -4,7 +4,7 @@ import CoreBluetooth
 import AVFoundation
 import SidebandCore
 
-final class ListeningModel: NSObject, ObservableObject, CBCentralManagerDelegate {
+final class ListeningModel: NSObject, ObservableObject, CBCentralManagerDelegate, AVSpeechSynthesizerDelegate {
     @Published var signals: [Signal] = []
     @Published var running = false
     @Published var demo = true
@@ -24,6 +24,7 @@ final class ListeningModel: NSObject, ObservableObject, CBCentralManagerDelegate
     private var routeObserver: NSObjectProtocol?
     override init() {
         super.init()
+        speech.delegate = self
         routeObserver = NotificationCenter.default.addObserver(forName: AVAudioSession.routeChangeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.updateRoute()
             if self?.hasPrivateOutput == false { self?.speech.stopSpeaking(at: .immediate) }
@@ -67,6 +68,16 @@ final class ListeningModel: NSObject, ObservableObject, CBCentralManagerDelegate
         scanRequested = false; running = false; elapsed = Int(ceil(Date().timeIntervalSince(startTime))); timer?.invalidate(); timer = nil; manager?.stopScan(); speech.stopSpeaking(at: .immediate)
         status = "Session stopped. Observations stay here until reset."
     }
+    func suspend() { if running || scanRequested { stop() } }
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) { releaseAudio() }
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) { releaseAudio() }
+    private func releaseAudio() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self, !self.speech.isSpeaking else { return }
+            try? AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
+            self.updateRoute()
+        }
+    }
     func reset() { stop(); session = SignalSession(); session.quiet = quiet; signals = []; aliases = [:]; elapsed = 0; status = "Session cleared." }
     private func tick() {
         elapsed = Int(Date().timeIntervalSince(startTime))
@@ -102,7 +113,7 @@ final class ListeningModel: NSObject, ObservableObject, CBCentralManagerDelegate
             try audio.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
             try audio.setActive(true)
             updateRoute()
-            guard hasPrivateOutput else { status = "Choose your glasses or headphones as audio output before speaking. Sideband will not announce through the phone speaker."; return }
+            guard hasPrivateOutput else { releaseAudio(); status = "Choose your glasses or headphones as audio output before speaking. Sideband will not announce through the phone speaker."; return }
             speech.stopSpeaking(at: .immediate)
             let utterance = AVSpeechUtterance(string: text); utterance.rate = 0.46; speech.speak(utterance)
         } catch { status = "Audio could not start: \(error.localizedDescription)" }

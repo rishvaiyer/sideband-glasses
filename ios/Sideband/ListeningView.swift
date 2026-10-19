@@ -26,6 +26,11 @@ struct ListeningView: View {
                         Spacer()
                         Image(systemName: "eyeglasses").font(.system(size: 34)).foregroundStyle(forest)
                     }
+                    NavigationLink {
+                        RevealView().navigationTitle("Reveal").navigationBarTitleDisplayMode(.inline)
+                    } label: {
+                        Label("Reveal hidden image or text", systemImage: "eye")
+                    }
                     VStack(alignment: .leading, spacing: 16) {
                         HStack { Text("Your listening session").font(.headline); Spacer(); Text(String(format: "%02d:%02d", model.elapsed / 60, model.elapsed % 60)).monospacedDigit() }
                         Picker("Session source", selection: $model.demo) { Text("Demo").tag(true); Text("iPhone Bluetooth").tag(false) }.pickerStyle(.segmented).disabled(model.running)
@@ -76,7 +81,7 @@ struct ListeningView: View {
                     }.padding(24).navigationTitle(signal.id).navigationBarTitleDisplayMode(.inline).toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { selected = nil } } }
                 }.presentationDetents([.medium, .large])
             }
-            .onChange(of: scenePhase) { _, phase in if phase != .active && model.running { model.stop() } }
+            .onChange(of: scenePhase) { _, phase in if phase == .background { model.suspend() } }
         }.tint(forest)
     }
 }
