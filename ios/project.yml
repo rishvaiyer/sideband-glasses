@@ -1,0 +1,30 @@
+name: Sideband
+options:
+  bundleIdPrefix: app.sideband
+  deploymentTarget:
+    iOS: "17.0"
+packages:
+  SidebandCore:
+    path: ..
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGNING_ALLOWED: NO
+targets:
+  Sideband:
+    type: application
+    platform: iOS
+    sources: [Sideband]
+    dependencies:
+      - package: SidebandCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.sideband.glasses
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Sideband
+        INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription: Sideband observes nearby Bluetooth advertisements while you choose to listen. Observations stay on your phone.
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"

@@ -1,0 +1,13 @@
+node_modules/
+.DS_Store
+.build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.env*
+!.env.example
+evidence/
+Sideband.xcodeproj/
+test-results/
+playwright-report/
+*.xcodeproj/
