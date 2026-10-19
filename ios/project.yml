@@ -28,3 +28,21 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2"
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
+  SidebandUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [SidebandUITests]
+    dependencies:
+      - target: Sideband
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: app.sideband.glasses.uitests
+schemes:
+  Sideband:
+    build:
+      targets:
+        Sideband: all
+        SidebandUITests: [test]
+    test:
+      targets: [SidebandUITests]
