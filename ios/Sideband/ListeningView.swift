@@ -26,11 +26,6 @@ struct ListeningView: View {
                         Spacer()
                         Image(systemName: "eyeglasses").font(.system(size: 34)).foregroundStyle(forest)
                     }
-                    NavigationLink {
-                        RevealView().navigationTitle("Reveal").navigationBarTitleDisplayMode(.inline)
-                    } label: {
-                        Label("Reveal hidden image or text", systemImage: "eye")
-                    }
                     VStack(alignment: .leading, spacing: 16) {
                         HStack { Text("Your listening session").font(.headline); Spacer(); Text(String(format: "%02d:%02d", model.elapsed / 60, model.elapsed % 60)).monospacedDigit() }
                         Picker("Session source", selection: $model.demo) { Text("Demo").tag(true); Text("iPhone Bluetooth").tag(false) }.pickerStyle(.segmented).disabled(model.running)
