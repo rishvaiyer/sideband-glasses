@@ -31,7 +31,7 @@ xcodegen generate --spec ios/project.yml --project ios
 open ios/Sideband.xcodeproj
 ```
 
-For a simulator, build with code signing disabled. For your iPhone, select your own development team and a unique bundle identifier, and set `CODE_SIGNING_ALLOWED=YES` for that device build. Signing credentials are never included. Pair your glasses through their supported phone setup, choose them as audio output, and use **Play audio check**. Then choose **iPhone Bluetooth** and start listening. Keep the app open; this version stops scanning when inactive. No camera or microphone permission is needed.
+For a simulator, build with code signing disabled. For your iPhone, select your own development team and a unique bundle identifier, and set `CODE_SIGNING_ALLOWED=YES` for that device build. Signing credentials are never included. Pair your glasses through their supported phone setup, choose them as audio output, and use **Play audio check**. Then choose **iPhone Bluetooth** and start listening. Keep the app open; this version stops scanning when it enters the background. No camera or microphone permission is needed.
 
 CI builds an unsigned simulator app. That artifact is **not an installable iPhone IPA**. Apple signing and an on-device build are required for physical installation; this repository does not claim App Store or TestFlight availability.
 

@@ -2,13 +2,13 @@
 
 ## Verified on 19 October 2026
 
-- 10 JavaScript behavior tests passed on Ryzen and GitHub CI.
+- 11 JavaScript behavior tests passed on Ryzen and GitHub CI.
 - 3 browser interaction tests passed on desktop and mobile-sized Chromium. Desktop/mobile screenshots were visually inspected. Tests exercise scenario switching, evidence selection, familiar status, quiet mode, recap, JSON download, pause/reset, keyboard activation and unavailable speech feedback.
-- 10 Swift core tests passed on the macOS GitHub runner.
+- 11 Swift core tests passed on the macOS GitHub runner.
 - Xcode successfully built the native iOS Simulator target without signing.
 - Public GitHub Pages deployment returned HTTP200 with the expected Sideband page.
 
-[Initial build evidence](https://github.com/rishvaiyer/sideband-glasses/actions/runs/39262969097). Native launch-and-listen UI automation is also included in CI; check the current run for its result. Browser checks are Chromium, not a claim of physical Mobile Safari testing.
+[Initial build evidence](https://github.com/rishvaiyer/sideband-glasses/actions/runs/39262969097). The latest core and browser checks total 25 passing tests. Native launch-and-listen UI automation is a separate check; its result is tracked in the [Intel simulator run](https://github.com/rishvaiyer/sideband-glasses/actions/runs/39265472511). Earlier simulator runs failed in runner startup or installation, after the app build passed. Simulator interaction is not yet verified. Browser checks are Chromium, not a claim of physical Mobile Safari testing.
 
 ## Physical acceptance still required
 
