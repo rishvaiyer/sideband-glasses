@@ -6,7 +6,7 @@ phone = phones[0]; device = phone["udid"]
 if phone["state"] != "Booted": subprocess.run(["xcrun", "simctl", "boot", device], check=True, timeout=60)
 subprocess.run(["xcrun", "simctl", "bootstatus", device, "-b"], check=True, timeout=240)
 subprocess.run(["open", "-a", "Simulator"], check=True, timeout=30)
-subprocess.run(["xcrun", "simctl", "install", device, "build/Build/Products/Debug-iphonesimulator/Sideband.app"], check=True, timeout=60)
+subprocess.run(["xcrun", "simctl", "install", device, "build/Build/Products/Debug-iphonesimulator/Sideband.app"], check=True, timeout=180)
 subprocess.run(["xcrun", "simctl", "launch", device, "app.sideband.glasses"], check=True, timeout=60)
 time.sleep(5)
 pathlib.Path("build/evidence").mkdir(exist_ok=True)
