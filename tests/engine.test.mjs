@@ -12,3 +12,5 @@ test('stale signals do not count as recently seen',()=>{const s=new SignalSessio
 test('memory is bounded under signal flooding',()=>{const s=new SignalSession();for(let n=0;n<500;n++)s.ingest(observation(String(n),n));assert.equal(s.signals.size,128);for(let n=500;n<600;n++)s.ingest(observation('0',n));assert.equal(s.signals.get('0').samples.length,20);});
 test('all scenes provide bounded synthetic observations',()=>{for(const name of ['cafe','commute','home']){const s=new SignalSession();for(let t=0;t<120;t++)for(const o of scenario(name,t))s.ingest(o);assert.ok(s.signals.size>0&&s.signals.size<=5);assert.match(s.recap(120),/Recording was not determined/);}});
 test('full UUID form also matches; unrelated strings do not',()=>{const s=new SignalSession();s.ingest(observation('A',0,['0000fd5f-0000-1000-8000-00805f9b34fb']));assert.ok(isMeta(s.signals.get('A')));s.ingest(observation('B',0,['FAKEFD5F']));assert.equal(isMeta(s.signals.get('B')),false);});
+
+test('advertised service history is bounded too',()=>{const s=new SignalSession();for(let t=0;t<200;t++)s.ingest(observation('A',t,[String(t)]));assert.equal(s.signals.get('A').services.length,64);});

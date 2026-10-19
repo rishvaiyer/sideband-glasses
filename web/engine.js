@@ -7,7 +7,7 @@ export class SignalSession {
     if (!s && this.signals.size >= 128) return null;
     s ??= {id:o.id, firstSeen:o.timestamp, lastSeen:o.timestamp, samples:[], services:[], observations:0, ignored:false};
     s.lastSeen=o.timestamp; s.samples=[...s.samples,o.rssi].slice(-20); s.observations++;
-    s.services=[...new Set([...s.services,...o.services.filter(v=>typeof v==='string' && v.length<=36).map(v=>v.toUpperCase())])].sort();
+    s.services=[...new Set([...s.services,...o.services.filter(v=>typeof v==='string' && v.length<=36).map(v=>v.toUpperCase())])].sort().slice(0,64);
     this.signals.set(s.id,s);
     if (!isMeta(s) || s.observations<3 || s.lastSeen-s.firstSeen<2 || s.ignored || this.quiet || this.announced.has(s.id) || o.timestamp-this.lastAlert<30) return null;
     const message='A Meta-associated Bluetooth signal has appeared nearby. Device type and recording are unconfirmed.';

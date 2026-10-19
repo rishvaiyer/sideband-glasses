@@ -6,6 +6,8 @@ An iPhone listening companion for Bluetooth audio glasses, with a polished inter
 
 [Try the interactive demo](https://rishvaiyer.github.io/sideband-glasses/) · [Privacy](docs/PRIVACY.md) · [Architecture and limitations](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md)
 
+![Sideband interactive demo](docs/demo-desktop.png)
+
 ## What you can try
 
 - Three replayable environments: café, train and home.

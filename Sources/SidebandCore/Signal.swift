@@ -40,7 +40,7 @@ public struct SignalSession {
         signal.lastSeen = observation.timestamp
         signal.samples = Array((signal.samples + [observation.rssi]).suffix(20))
         signal.observations += 1
-        signal.services = Array(Set(signal.services + observation.services.map { $0.uppercased() }.filter { $0.count <= 36 })).sorted()
+        signal.services = Array(Set(signal.services + observation.services.map { $0.uppercased() }.filter { $0.count <= 36 }).sorted().prefix(64))
         signals[signal.id] = signal
         guard signal.alertEligible, !quiet, !announced.contains(signal.id), observation.timestamp - lastAlert >= 30 else { return nil }
         let message = "A Meta-associated Bluetooth signal has appeared nearby. Device type and recording are unconfirmed."
